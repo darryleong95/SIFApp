@@ -5,12 +5,12 @@ import React from 'react'
 
 // import all screens
 import LoginComponent from "../Components/Login/index"
+import SignUpComponent from '../Components/SignUp/index'
 import LandingComponent from '../Components/Landing/index'
-// import BrowseSeniorsComponent from '../Components/BrowseSeniors/index'
-// import SideMenu from '../Components/SideMenu/SideMenuComponent'
 import SeniorProfileComponent from '../Components/SeniorProfile/index'
-// import ListingComponent from '../Components/Listing/index'
 import DateComponent from '../Components/DateComponent/index'
+
+
 
 // Senior Stack
 const SeniorStack = StackNavigator(
@@ -32,6 +32,7 @@ const SeniorStack = StackNavigator(
 const LoginStack = StackNavigator(
     {
         LoginComponent: { screen: LoginComponent },
+        SignUpComponent: { screen: SignUpComponent }
     }, 
     {
         headerMode: 'none',

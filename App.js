@@ -3,6 +3,7 @@ import React from 'react'
 import { StackNavigator } from 'react-navigation';
 import PrimaryNav from './Container/Navigation/AppNavigation';
 import WalkthroughComponent from './Container/Components/Walkthrough/index'
+import SignUpComponent from './Container/Components/SignUp/index'
 
 // login stack
 const MainStack = StackNavigator(
