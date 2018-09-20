@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 // Style Imports
 import styles from './styles'
 
-export default function SignUpHeader(props){
+export default function SignUpMainText(props){
     return(
         <View>
             <Text style={styles.headerText}>

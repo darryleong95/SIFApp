@@ -11,8 +11,8 @@ export default class SignUpInput extends Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
-    handleChange(text, name){
-        this.props.update(text, name)
+    handleChange(text){
+        this.props.update(text, this.props.name)
     }
 
     render(){

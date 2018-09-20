@@ -1,4 +1,4 @@
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { createStackNavigator, DrawerNavigator } from 'react-navigation';
 import { Text } from 'react-native'
 import React from 'react'
 
@@ -7,43 +7,44 @@ import React from 'react'
 import LoginComponent from "../Components/Login/index"
 import SignUpComponent from '../Components/SignUp/index'
 import LandingComponent from '../Components/Landing/index'
-import SeniorProfileComponent from '../Components/SeniorProfile/index'
+import SeniorProfileComponent from '../Components/SeniorProfile'
 import DateComponent from '../Components/DateComponent/index'
-
-
+import CustomerProfileComponent from '../Components/CustomerProfile/index'
+import UserType from '../Components/UserType/index'
+import NewClassComponent from '../Components/NewClassComponent/index'
 
 // Senior Stack
-const SeniorStack = StackNavigator(
+export const SeniorStack = createStackNavigator(
     {
         SeniorProfileComponent: { screen: SeniorProfileComponent },
+        NewClassComponent: { screen: NewClassComponent },
         LandingComponent: { screen: LandingComponent },
         DateComponent: {screen: DateComponent}
     },
     {
         headerMode: 'none',
-        initialRouteName: 'LandingComponent',
-        navigationOptions: ({ navigation }) => ({
-			gesturesEnabled: false,
-		}),
+        initialRouteName: 'SeniorProfileComponent',
     }
 )
 
 // login stack
-const LoginStack = StackNavigator(
+export const LoginStack = createStackNavigator(
     {
         LoginComponent: { screen: LoginComponent },
-        SignUpComponent: { screen: SignUpComponent }
+        SignUpComponent: { screen: SignUpComponent },
+        UserTypeComponent: { screen: UserType }
     }, 
     {
         headerMode: 'none',
-        initialRouteName: 'LoginComponent'
+        initialRouteName: 'UserTypeComponent'
     }
 )
     // Manifest of possible screens
-const PrimaryNav = StackNavigator(
+export const PrimaryNav = createStackNavigator(
     {
         LoginStack: { screen: LoginStack },
-        SeniorStack: { screen: SeniorStack }
+        SeniorStack: { screen: SeniorStack },
+        CustomerProfile: { screen: CustomerProfileComponent }
     }, 
     {
         // Default config for all screens
@@ -51,5 +52,3 @@ const PrimaryNav = StackNavigator(
         initialRouteName: 'LoginStack'
     }
 )
-
-export default PrimaryNav

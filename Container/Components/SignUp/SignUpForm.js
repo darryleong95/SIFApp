@@ -1,70 +1,130 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import { Form } from 'native-base'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import EmailValidator from 'email-validator'
+
 // Component Import
 import SignUpInput from './SignUpInput'
 import SignUpButton from './SignUpButton'
-import SignUpHeader from './SignUpHeader'
-import { auth, firebasedb }  from '../../Firebase'
+import SignUpMainText from './SignUpMainText'
+
+// Actions Import
+import { doUserSignUp } from '../../Actions/UserAction'
+import { doSeniorSignUp } from '../../Actions/SeniorAction'
+
 // Style Import
 import styles from './styles'
 import { Metrics } from '../../Themes';
 
-export default class SignUpForm extends Component {
+class SignUpForm extends Component {
 
     constructor(props){
         super(props)
         this.state = {
             name: '',
             email: '',
+            contactNo: '',
             password: '',
+            passwordEquality: false
         }
-        this.setName = this.setName.bind(this)
-        this.setPassword = this.setPassword.bind(this)
-        this.setEmail = this.setEmail.bind(this)
-        this.handleChange = this.handleChange.bind(this)
+        this.setCredentials = this.setCredentials.bind(this)
+        this.handleSignUp = this.handleSignUp.bind(this)
+        this.checkPasswords = this.checkPasswords.bind(this)
     }
 
-    setName(value){
-        this.setState({name: value})
-    }
-
-    setEmail(value){
-        this.setState({email: value})
-    }
-
-    setPassword(value){
-        this.setState({password: value})
-    }
-
-    handleChange(){
-        auth.doCreateUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then((data) => {
-            // Also create new User entry
-            firebasedb.ref('users/' + data.user.uid).set({
-                name: this.state.name,
-                email: data.user.email
+    setCredentials(text, name){
+        if(name === "name"){
+            this.setState({
+                name: text
             })
-        })
-        .catch(error => {
-            alert(error)
-        });
+        }
+        else if (name === "email"){
+            this.setState({
+                email: text
+            })
+        }
+        else if (name === "password"){
+            this.setState({
+                password: text
+            })
+        }
+        else {
+            this.setState({
+                contactNo: text
+            })
+        }
+    }
+
+    handleSignUp(){
+        // check for valid contact number (Check whether all are digits)
+        var contactNumberIsValid = /^\d+$/.test(this.state.contactNo)
+
+        if(EmailValidator.validate(this.state.email)){
+            if(this.props.loginType === "Customer"){
+                this.props.doUserSignUp(this.state)   
+            }
+            else{
+                if(contactNumberIsValid){
+                    this.props.doSeniorSignUp(this.state)
+                    this.props.navigate('SeniorStack')
+                }
+                else{
+                    alert('Ensure Contact number is valid')
+                }
+            }
+        }
+        else {
+            alert('The Email you have entered is Invalid')
+        }
+    }
+
+    checkPasswords(value){
+        if(this.state.password === value && value){
+            // show error message
+           this.setState({
+               passwordEquality: true
+           })
+        }
     }
 
     render(){
         return(
-            <View style={styles.body}>
-                <SignUpHeader />
+            <View style={this.props.loginType === 'Customer'? styles.userSignUp : styles.seniorSignUp}>
+                <SignUpMainText />
                 <View style={{marginTop: Metrics.HEIGHT * 0.05}}>
                     <Form>
-                        <SignUpInput name="name" update={this.setName} placeholder="Name" secureEntry={false} />
-                        <SignUpInput name="email" update={this.setEmail} placeholder="Email" secureEntry={false} />
-                        <SignUpInput name="password" update={this.setPassword} placeholder="Password" secureEntry={true} />
-                        <SignUpButton doSignUp={this.handleChange} button={styles.button} />
+                        <SignUpInput name="name" update={this.setCredentials} placeholder="Name" secureEntry={false} />
+                        <SignUpInput name="email" update={this.setCredentials} placeholder="Email" secureEntry={false} />
+                        {
+                            this.props.loginType !== 'Customer' &&
+                            <SignUpInput name="contactNo" update={this.setCredentials} placeholder="Contact No." secureEntry={false} />
+                        }
+                        <SignUpInput name="password" update={this.setCredentials} placeholder="Password" secureEntry={true} />
+                        <SignUpInput name="password" update={this.checkPasswords} placeholder="Confirm Password" secureEntry={true} />
+                        {
+                            !this.state.passwordEquality && 
+                                <View style={{marginTop: Metrics.HEIGHT * 0.02, alignSelf:"center", width: Metrics.WIDTH * 0.80}}>
+                                    <Text style={{color:'white'}}>Please ensure password matches</Text>
+                                </View> 
+                        }
+                        <SignUpButton text="Sign Up!" doSignUp={this.handleSignUp} button={styles.signUpButton} /> 
                     </Form>
                 </View>
             </View>
         )
     }
-
 }
+
+SignUpForm.propTypes = {
+    doUserSignUp: PropTypes.func.isRequired,
+    doSeniorSignUp: PropTypes.func.isRequired,
+    name: PropTypes.string
+}
+
+const mapStateToProps = state => ({
+    loginType: state.login.loginType
+})
+
+export default connect(mapStateToProps, {doUserSignUp, doSeniorSignUp})(SignUpForm)

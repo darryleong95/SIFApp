@@ -2,7 +2,13 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './Container/Reducers/index'
 
-const initialState = {}
+const initialState = {
+    userReview: {
+        byHash:{
+        },
+        byKey: []
+    },
+}
 
 const middleware = [thunk]
 

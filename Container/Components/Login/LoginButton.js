@@ -1,12 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { TouchableOpacity, Text } from 'react-native'
 
-export default function LoginButton(props){
-    return(
-        <TouchableOpacity info style={props.buttondialogsignup} onPress={() => props.navigate(props.destination)}>
-            <Text autoCapitalize="words" style={props.buttonsignin}>
-                Sign In
-            </Text>
-        </TouchableOpacity>
-    )
+export default class LoginButton extends Component {
+    constructor(props){
+        super(props)
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(){
+        this.props.action()
+    }
+
+    render(){
+        return(
+            <TouchableOpacity info style={this.props.buttondialogsignup} onPress={this.handleChange}>
+                <Text autoCapitalize="words" style={this.props.buttonsignin}>
+                    Sign In
+                </Text>
+            </TouchableOpacity>
+        )
+    }
 }

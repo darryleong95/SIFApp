@@ -13,8 +13,8 @@ export default class SignUpButton extends Component {
 
     render(){
         return(
-            <TouchableOpacity onPress={this.props.doSignUp} style={{marginTop: (Metrics.HEIGHT * 0.03)}}>
-                <Text style={this.props.button}>Sign Up!</Text>
+            <TouchableOpacity onPress={this.props.doSignUp} style={{marginTop: (Metrics.HEIGHT * 0.05)}}>
+                <Text style={this.props.button}>{this.props.text}</Text>
             </TouchableOpacity>
         )
     }

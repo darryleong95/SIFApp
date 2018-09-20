@@ -21,9 +21,17 @@ const styles = StyleSheet.create({
 	},
 
 	// View -  Body
-	body: {
+	userSignUp: {
 		flex: 1,
-		marginTop: Metrics.HEIGHT * 0.3,
+		marginTop: Metrics.HEIGHT * 0.20,
+		alignSelf: 'center',
+		backgroundColor: 'transparent',
+		position: "absolute"
+	},
+
+	seniorSignUp: {
+		flex: 1,
+		marginTop: Metrics.HEIGHT * 0.15,
 		alignSelf: 'center',
 		backgroundColor: 'transparent',
 		position: "absolute"
@@ -69,7 +77,7 @@ const styles = StyleSheet.create({
 	},
 
 	// Button
-	button:{
+	signUpButton:{
 		fontFamily: "AirbnbCereal-Book",
 		textAlign:'center',
 		alignSelf:'center',
@@ -77,11 +85,9 @@ const styles = StyleSheet.create({
 		width: (Metrics.WIDTH) * 0.80,
 		color:'white',
 		backgroundColor: '#e25858',
-		marginTop: Metrics.HEIGHT * 0.2,
 		paddingTop: Metrics.HEIGHT * 0.02,
 		paddingBottom: Metrics.HEIGHT * 0.02,
-		borderRadius: 2,
-		marginTop: Metrics.HEIGHT * 0.05,
+		borderRadius: 3,
 		borderColor: 'black'
 	},
 

@@ -10,6 +10,10 @@ import SignUpForm from './SignUpForm'
 import styles from './styles'
 
 export default class SignUpComponent extends Component {
+    constructor(props){
+        super(props)        
+    }
+
     render(){
         const imageUri = require('../../Images/SIF/vietnam1.jpg')
         return(
@@ -17,7 +21,7 @@ export default class SignUpComponent extends Component {
                 <ImageBackground style={styles.imgContainer} source={imageUri} >
                     <View style={styles.overlay} /> 
                 </ImageBackground>
-                <SignUpForm />
+                <SignUpForm navigate={this.props.navigation.navigate} destination="CustomerProfileComponent"/>
 			</Container>
         )
     }

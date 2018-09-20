@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
 	},
 	
 	buttondialogsignup:{
+		marginTop: Metrics.WIDTH * 0.05,
 		backgroundColor: '#e25858',
 		justifyContent: 'center',
 		alignItems: 'center',

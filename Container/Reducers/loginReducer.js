@@ -1,23 +1,35 @@
-import { DO_LOGIN, DO_SIGNUP } from '../Actions/types';
+import { LOGIN_TYPE, DO_USER_LOGIN, DO_SENIOR_LOGIN } from '../Actions/types'
 
-const initialState = {
-  // Initalize all user details after login
-  loginStatus: false,
-};
+initialState = {
+    loginType: ''
+}
 
-export default function(state = initialState, action) {
-  switch (action.type) {
-    case DO_LOGIN:
-      return {
-        ...state,
-        items: action.payload
-      };
-    case DO_SIGNUP:
-      return {
-        ...state,
-        item: action.payload
-      };
-    default:
-      return state;
-  }
+export default function(state = initialState, action){
+    switch(action.type){
+        case LOGIN_TYPE: {
+            state = {
+                loginType: action.loginType
+            }
+            // console.log(state)
+            return {
+                ...state
+            }
+        }
+        case DO_USER_LOGIN: {
+            return {
+                ...action.payload
+            }; 
+        }
+        case DO_SENIOR_LOGIN: {
+            state = {
+                ...action.payload
+            }
+            console.log(state)
+            return {
+                state
+            };
+        }
+        default:
+         return state
+    }
 }
